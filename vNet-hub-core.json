@@ -1,46 +1,46 @@
 ﻿{
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  // Vertical-Horizontal Peered vNet Architecture
-  // By Eliot Mansfield - Trustmarque  eliot.mansfield@trustmarque.com
-  // Feb 2017
+  // AzuRA - Central Hub
+  // By Catalin Magher -={ mail@catalin.at }=- | https://www.linkedin.com/in/catalinmagher
+  // November 2017
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "vNetName": {
-      "defaultValue": "vNet",
-      "type": "String"
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "VNET-CentralHub",
+      "metadata": {
+        "description": "AzuRA - Central HUB - VNET Deployment"
+      }
     },
 
     "location": {
-      "defaultValue": "UK South",
-      "type": "String",
+      "defaultValue": "West Europe",
+      "type": "string",
       "metadata": {
-        "description": "Which Datacentre."
+        "description": "Select your Datacenter location"
       },
       "allowedValues": [
-        "UK South",
-        "UK West",
         "North Europe",
         "West Europe",
-        "local"
       ]
     }
-
   },
+
   "variables": { },
   "resources": [
     {
 
       "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('vNetName')]",
+      "name": "[parameters('vnetName')]",
       "apiVersion": "2016-03-30",
       "location": "[parameters('location')]",
       "tags": {
-        "displayname": "[parameters('vNetName')]"
+        "displayname": "[parameters('vnetName')]"
       },
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "172.16.0.0/16"
+            "10.76.127.0/24"
           ]
         },
         "dhcpOptions": {
@@ -49,11 +49,12 @@
             "8.8.4.4"
           ]
         },
+        
         "subnets": [
           {
-            "name": "GatewaySubnet",
+            "name": "Subnet-ExpressRouteGateway",
             "properties": {
-              "addressPrefix": "172.16.0.0/27"
+              "addressPrefix": "10.76.127.0/27"
             }
 
           },
