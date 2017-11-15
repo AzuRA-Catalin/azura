@@ -5,7 +5,7 @@
   // November 2017
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "vnetName": {
+    "vnetName1": {
       "type": "string",
       "defaultValue": "VNET-CentralHub",
       "metadata": {
@@ -31,11 +31,11 @@
     {
 
       "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('vnetName')]",
+      "name": "[parameters('vnetName1')]",
       "apiVersion": "2016-03-30",
       "location": "[parameters('location')]",
       "tags": {
-        "displayname": "[parameters('vnetName')]"
+        "displayname": "[parameters('vnetName1')]"
       },
       "properties": {
         "addressSpace": {
