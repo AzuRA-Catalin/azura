@@ -1,0 +1,67 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  // Links a Transit Subscription to a DG Subsubscription
+  // By Eliot Mansfield - Trustmarque
+  // This Peering needs to be created before the spoke to hub peering.
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+
+    "hubvnet": {
+      "type": "string",
+      "metadata": {
+        "description": "first or hub vNet name"
+      }
+    },
+
+
+    "spokevnet": {
+      "type": "string",
+      "metadata": {
+        "description": "second or spoke vNet name"
+      }
+    },
+
+
+    "spoke_subscriptionid": {
+      "type": "string",
+      "metadata": {
+        "description": "Subscription ID of the Spoke vNet"
+      }
+    },
+
+
+    "spoke_resourcegroup": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource group that contains the Spoke vNet"
+      }
+    }
+
+
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "apiVersion": "2016-06-01",
+      "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+      "name": "[concat(parameters('hubvnet'),'/LinkTo',parameters('spokevnet'))]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "allowVirtualNetworkAccess": true,
+        "allowForwardedTraffic": true,
+        "allowGatewayTransit": true,
+        "useRemoteGateways": false,
+        "remoteVirtualNetwork": {
+          "id": "[concat('/subscriptions/',parameters('spoke_subscriptionid'),'/resourceGroups/',parameters('spoke_resourcegroup'),'/providers/Microsoft.Network/virtualNetworks/',parameters('spokevnet'))]"
+
+
+        }
+      }
+    }
+
+
+
+
+  ]
+}

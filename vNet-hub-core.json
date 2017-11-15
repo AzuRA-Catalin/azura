@@ -1,0 +1,138 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  // Vertical-Horizontal Peered vNet Architecture
+  // By Eliot Mansfield - Trustmarque  eliot.mansfield@trustmarque.com
+  // Feb 2017
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vNetName": {
+      "defaultValue": "vNet",
+      "type": "String"
+    },
+
+    "location": {
+      "defaultValue": "UK South",
+      "type": "String",
+      "metadata": {
+        "description": "Which Datacentre."
+      },
+      "allowedValues": [
+        "UK South",
+        "UK West",
+        "North Europe",
+        "West Europe",
+        "local"
+      ]
+    }
+
+  },
+  "variables": { },
+  "resources": [
+    {
+
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('vNetName')]",
+      "apiVersion": "2016-03-30",
+      "location": "[parameters('location')]",
+      "tags": {
+        "displayname": "[parameters('vNetName')]"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "172.16.0.0/16"
+          ]
+        },
+        "dhcpOptions": {
+          "dnsServers": [
+            "8.8.8.8",
+            "8.8.4.4"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "GatewaySubnet",
+            "properties": {
+              "addressPrefix": "172.16.0.0/27"
+            }
+
+          },
+          {
+            "name": "snet-transit-outside",
+            "properties": {
+              "addressPrefix": "172.16.0.32/27"
+
+            }
+
+          },
+          {
+            "name": "snet-transit-trusted",
+            "properties": {
+              "addressPrefix": "172.16.0.64/27"
+
+            }
+
+
+
+          },
+
+
+
+          {
+            "name": "snet-transit-untrusted",
+            "properties": {
+              "addressPrefix": "172.16.0.96/27"
+
+            }
+
+
+
+          },
+
+
+
+
+          {
+            "name": "snet-transit-semitrusted",
+            "properties": {
+              "addressPrefix": "172.16.0.128/27"
+
+            }
+
+          },
+          {
+            "name": "snet-core-trusted",
+            "properties": {
+              "addressPrefix": "172.16.1.0/24"
+
+            }
+
+          },
+
+          {
+            "name": "snet-core-untrusted",
+            "properties": {
+              "addressPrefix": "172.16.2.0/24"
+
+            }
+
+          },
+
+          {
+            "name": "snet-core-semitrusted",
+            "properties": {
+              "addressPrefix": "172.16.3.0/24"
+
+            }
+
+
+
+          }
+
+        ]
+      }
+
+
+    }
+  ]
+}

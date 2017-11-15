@@ -1,0 +1,93 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  // Vertical-Horizontal Peered vNet Architecture
+  // By Eliot Mansfield - Trustmarque  eliot.mansfield@trustmarque.com
+  // Feb 2017
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vNetName": {
+      "defaultValue": "vNet",
+      "type": "String"
+    },
+
+    "location": {
+      "defaultValue": "UK South",
+      "type": "String",
+      "metadata": {
+        "description": "Which Datacentre."
+      },
+      "allowedValues": [
+        "UK South",
+        "UK West",
+        "North Europe",
+        "West Europe",
+        "local"
+      ]
+    }
+
+  },
+  "variables": { },
+  "resources": [
+    {
+
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('vNetName')]",
+      "apiVersion": "2016-03-30",
+      "location": "[parameters('location')]",
+      "tags": {
+        "displayname": "[parameters('vNetName')]"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "172.18.0.0/16"
+          ]
+        },
+        "dhcpOptions": {
+          "dnsServers": [
+            "8.8.8.8",
+            "8.8.4.4"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "GatewaySubnet",
+            "properties": {
+              "addressPrefix": "172.18.0.0/27"
+            }
+
+          },
+          {
+            "name": "snet-dev-trusted",
+            "properties": {
+              "addressPrefix": "172.18.1.0/24"
+
+            }
+
+          },
+
+          {
+            "name": "snet-dev-untrusted",
+            "properties": {
+              "addressPrefix": "172.18.2.0/24"
+
+            }
+
+          },
+          {
+            "name": "snet-dev-semitrusted",
+            "properties": {
+              "addressPrefix": "172.18.3.0/24"
+
+            }
+
+          }
+
+
+        ]
+      }
+
+
+    }
+  ]
+}
