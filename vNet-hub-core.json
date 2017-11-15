@@ -17,7 +17,7 @@
       "defaultValue": "West Europe",
       "type": "string",
       "metadata": {
-        "description": "Select your Datacenter location"
+        "description": "Select your Virtual Datacenter location"
       },
       "allowedValues": [
         "North Europe",
@@ -50,68 +50,68 @@
           ]
         },
         
+
+
         "subnets": [
+
           {
             "name": "Subnet-ExpressRouteGateway",
             "properties": {
               "addressPrefix": "10.76.127.0/27"
             }
-
           },
+
           {
-            "name": "snet-transit-outside",
+            "name": "Subnet-Management",
             "properties": {
               "addressPrefix": "10.76.127.32/27"
-
             }
-
           },
+
+
+
           {
-            "name": "snet-transit-trusted",
+            "name": "Subnet-PrivateDMZ-Frontend",
             "properties": {
               "addressPrefix": "10.76.127.64/27"
-
             }
-
-
-
           },
 
-
-
           {
-            "name": "snet-transit-untrusted",
+            "name": "Subnet-PrivateDMZ-Backend",
             "properties": {
               "addressPrefix": "10.76.127.96/27"
             }
           },
 
 
-
-
           {
-            "name": "snet-transit-semitrusted",
+            "name": "Subnet-PublicDMZ-Frontend",
             "properties": {
               "addressPrefix": "10.76.127.128/27"
             }
 
           },
           {
-            "name": "snet-core-trusted",
+            "name": "Subnet-PublicDMZ-Backend",
             "properties": {
               "addressPrefix": "10.76.127.160/27"
             }
           },
 
+
+
           {
-            "name": "snet-core-untrusted",
+            "name": "Subnet-Identity",
             "properties": {
               "addressPrefix": "10.76.127.192/27"
             }
           },
 
+
+
           {
-            "name": "snet-core-semitrusted",
+            "name": "Subnet-SharedServices",
             "properties": {
               "addressPrefix": "10.76.127.224/27"
             }
