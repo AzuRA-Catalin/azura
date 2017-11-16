@@ -1,0 +1,121 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  // AzuRA - Central Hub
+  // By Catalin Magher -={ mail@catalin.at }=- | https://www.linkedin.com/in/catalinmagher
+  // November 2017
+  "contentVersion": "1.0.0.0",
+
+
+  "parameters": 
+  {
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "VNET-CentralHub",
+      "metadata": {
+        "description": "AzuRA - Central HUB - VNET Deployment"
+      }
+    },
+
+    "location": {
+      "defaultValue": "West Europe",
+      "type": "string",
+      "metadata": {
+        "description": "Select your Virtual Datacenter location"
+      },
+      "allowedValues": [
+        "North Europe",
+        "West Europe",
+      ]
+    }
+  },
+
+
+  "variables": { },
+
+
+  "resources": [
+
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('vnetName')]",
+      "apiVersion": "2016-03-30",
+      "location": "[parameters('location')]",
+      "tags": {
+        "displayname": "[parameters('vnetName')]"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.76.127.0/24"
+          ]
+        },
+ 
+        "subnets": [
+
+          {
+            "name": "Subnet-ExpressRouteGateway",
+            "properties": {
+              "addressPrefix": "10.76.127.0/27"
+            }
+          },
+
+          {
+            "name": "Subnet-Management",
+            "properties": {
+              "addressPrefix": "10.76.127.32/27"
+            }
+          },
+
+
+
+          {
+            "name": "Subnet-PrivateDMZ-Frontend",
+            "properties": {
+              "addressPrefix": "10.76.127.64/27"
+            }
+          },
+
+          {
+            "name": "Subnet-PrivateDMZ-Backend",
+            "properties": {
+              "addressPrefix": "10.76.127.96/27"
+            }
+          },
+
+
+          {
+            "name": "Subnet-PublicDMZ-Frontend",
+            "properties": {
+              "addressPrefix": "10.76.127.128/27"
+            }
+
+          },
+          {
+            "name": "Subnet-PublicDMZ-Backend",
+            "properties": {
+              "addressPrefix": "10.76.127.160/27"
+            }
+          },
+
+
+
+          {
+            "name": "Subnet-Identity",
+            "properties": {
+              "addressPrefix": "10.76.127.192/27"
+            }
+          },
+
+
+
+          {
+            "name": "Subnet-SharedServices",
+            "properties": {
+              "addressPrefix": "10.76.127.224/27"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
